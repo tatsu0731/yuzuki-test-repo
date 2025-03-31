@@ -1,0 +1,26 @@
+name: Init Single Issue
+
+on:
+  push:
+    paths:
+      - '.github/init-issue.json'
+    branches:
+      - main
+
+permissions:
+  issues: write
+
+jobs:
+  create_issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Create Issue
+        uses: peter-evans/create-issue-from-file@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "リポジトリ準備: READMEの更新"
+          content-filepath: .github/init-issue.json
